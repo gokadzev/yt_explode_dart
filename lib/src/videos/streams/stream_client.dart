@@ -57,7 +57,15 @@ class StreamClient {
       List<YoutubeApiClient>? ytClients,
       bool requireWatchPage = true}) async {
     videoId = VideoId.fromString(videoId);
-    final clients = ytClients ?? [YoutubeApiClient.ios];
+    final clients = ytClients ??
+        [
+          YoutubeApiClient.androidVr,
+          YoutubeApiClient.ios,
+          YoutubeApiClient.android,
+          YoutubeApiClient.mweb,
+          YoutubeApiClient.tv,
+          YoutubeApiClient.safari
+        ];
 
     final uniqueStreams = LinkedHashSet<StreamInfo>(
       equals: (a, b) {
@@ -91,14 +99,18 @@ class StreamClient {
             );
           }
 
-          final response = await _httpClient.head(streams.first.url);
+          final response = await _httpClient.head(streams.last.url);
           if (response.statusCode == 403) {
             throw YoutubeExplodeException(
-              'Video $videoId returned 403 (stream: ${streams.first.tag})',
+              'Video $videoId returned 403 (stream: ${streams.last.tag})',
             );
           }
+
           uniqueStreams.addAll(streams);
         });
+        if (uniqueStreams.isNotEmpty) {
+          break;
+        }
       } catch (e, s) {
         _logger.severe(
             'Failed to get stream manifest for video $videoId with client: ${client.payload['context']['client']['clientName']}. Reason: $e\n',
@@ -165,7 +177,11 @@ class StreamClient {
 
   Stream<StreamInfo> _getStream(VideoId videoId, YoutubeApiClient ytClient,
       bool requireWatchPage) async* {
-    final watchPage = requireWatchPage
+    final watchPage = ([
+      YoutubeApiClient.mweb,
+      YoutubeApiClient.safari,
+      YoutubeApiClient.tv
+    ]).contains(ytClient)
         ? await WatchPage.get(_httpClient, videoId.value)
         : null;
 
@@ -192,18 +208,18 @@ class StreamClient {
     yield* _parseStreamInfo(playerResponse.streams,
         watchPage: watchPage, videoId: videoId);
 
-    if (!playerResponse.dashManifestUrl.isNullOrWhiteSpace) {
-      final dashManifest =
-          await _controller.getDashManifest(playerResponse.dashManifestUrl!);
-      yield* _parseStreamInfo(dashManifest.streams,
-          watchPage: watchPage, videoId: videoId);
-    }
-    if (!playerResponse.hlsManifestUrl.isNullOrWhiteSpace) {
-      final hlsManifest =
-          await _controller.getHlsManifest(playerResponse.hlsManifestUrl!);
-      yield* _parseStreamInfo(hlsManifest.streams,
-          watchPage: watchPage, videoId: videoId);
-    }
+    // if (!playerResponse.dashManifestUrl.isNullOrWhiteSpace) {
+    //   final dashManifest =
+    //       await _controller.getDashManifest(playerResponse.dashManifestUrl!);
+    //   yield* _parseStreamInfo(dashManifest.streams,
+    //       watchPage: watchPage, videoId: videoId);
+    // }
+    // if (!playerResponse.hlsManifestUrl.isNullOrWhiteSpace) {
+    //   final hlsManifest =
+    //       await _controller.getHlsManifest(playerResponse.hlsManifestUrl!);
+    //   yield* _parseStreamInfo(hlsManifest.streams,
+    //       watchPage: watchPage, videoId: videoId);
+    // }
   }
 
   String? _playerScript;
@@ -231,6 +247,10 @@ class StreamClient {
     CipherManifest? cipherManifest;
 
     for (final stream in streams) {
+      // restrict to audio streams
+      if (stream.audioCodec.isNullOrWhiteSpace) {
+        continue;
+      }
       final itag = stream.tag;
       var url = Uri.parse(stream.url);
 

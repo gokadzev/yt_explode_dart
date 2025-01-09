@@ -6,12 +6,17 @@ void main() async {
   DateTime start = DateTime.now();
   try {
     print("\n=================SAFARI=========================");
-    final manifest = await yt.videos.streams.getManifest(
-        requireWatchPage: true,
-        "D49nMgP7Vzc",
-        ytClients: [YoutubeApiClient.safari]);
+    final manifest = await yt.videos.streams
+        .getManifest(requireWatchPage: false, "F-A_hUV34_k", ytClients: [
+      YoutubeApiClient.androidVr,
+      YoutubeApiClient.ios,
+      YoutubeApiClient.android,
+      YoutubeApiClient.mweb,
+      YoutubeApiClient.tv,
+      YoutubeApiClient.safari,
+    ]);
     for (var _ in manifest.audioOnly) {
-      print("${_.codec} ${_.tag}");
+      print("${_.codec} ${_.tag} ${_.loudnessDb}");
     }
   } catch (e) {
     print("$e");
@@ -19,15 +24,16 @@ void main() async {
   DateTime end = DateTime.now();
   print(
       "====================Time taken: ${end.difference(start).inMilliseconds}ms by safari======\n\n");
+  return;
   start = DateTime.now();
   try {
     print("\n===================ANDROID_VR=======================");
     final manifest = await yt.videos.streams.getManifest(
-        requireWatchPage: false,
-        "D49nMgP7Vzc",
+        requireWatchPage: true,
+        "F-A_hUV34_k",
         ytClients: [YoutubeApiClient.androidVr]);
     for (var _ in manifest.audioOnly) {
-      print("${_.codec} ${_.tag}");
+      print("${_.codec} ${_.tag} ${_.loudnessDb}");
     }
   } catch (e) {
     print("$e");
@@ -40,12 +46,12 @@ void main() async {
     print("\n====================ANDROID======================");
     final manifest = await yt.videos.streams.getManifest(
         requireWatchPage: true,
-        "D49nMgP7Vzc",
+        "F-A_hUV34_k",
         ytClients: [YoutubeApiClient.android]);
     for (var _ in manifest.audioOnly) {
-      print("${_.codec} ${_.tag}");
-      if (_.tag == 600) {
-        print(_.url);
+      print("${_.codec} ${_.tag} ${_.loudnessDb}");
+      if (_.tag == 251) {
+        print(_.loudnessDb);
         print(_.size);
       }
     }
@@ -60,10 +66,10 @@ void main() async {
     print("\n=====================MWEB=====================");
     final manifest = await yt.videos.streams.getManifest(
         requireWatchPage: true,
-        "D49nMgP7Vzc",
+        "F-A_hUV34_k",
         ytClients: [YoutubeApiClient.mweb]);
     for (var _ in manifest.audioOnly) {
-      print("${_.codec} ${_.tag}");
+      print("${_.codec} ${_.tag} ${_.loudnessDb}");
     }
   } catch (e) {
     print("$e");
@@ -75,11 +81,11 @@ void main() async {
   try {
     print("\n====================IOS======================");
     final manifest = await yt.videos.streams.getManifest(
-        requireWatchPage: false,
-        "D49nMgP7Vzc",
+        requireWatchPage: true,
+        "F-A_hUV34_k",
         ytClients: [YoutubeApiClient.ios]);
     for (var _ in manifest.audioOnly) {
-      print("${_.codec} ${_.tag}");
+      print("${_.codec} ${_.tag} ${_.loudnessDb}");
     }
   } catch (e) {
     print("$e");
@@ -91,11 +97,11 @@ void main() async {
   try {
     print("\n====================TV======================");
     final manifest = await yt.videos.streams.getManifest(
-        requireWatchPage: true,
-        "D49nMgP7Vzc",
+        requireWatchPage: false,
+        "v9D54dHDiMs",
         ytClients: [YoutubeApiClient.tv]);
     for (var _ in manifest.audioOnly) {
-      print("${_.codec} ${_.tag}");
+      print("${_.codec} ${_.tag} ${_.loudnessDb}");
     }
   } catch (e) {
     print("$e");

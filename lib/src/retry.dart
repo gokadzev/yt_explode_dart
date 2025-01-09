@@ -44,5 +44,5 @@ int getExceptionCost(Exception e) {
   if (e is VideoUnplayableException) {
     return 5;
   }
-  return 1;
+  return 3;
 }
