@@ -46,6 +46,8 @@ class AudioOnlyStreamInfo with StreamInfo, AudioStreamInfo {
   @override
   final AudioTrack? audioTrack;
 
+  final double loudnessDb;
+
   AudioOnlyStreamInfo(
       this.videoId,
       this.tag,
@@ -57,7 +59,8 @@ class AudioOnlyStreamInfo with StreamInfo, AudioStreamInfo {
       this.qualityLabel,
       this.fragments,
       this.codec,
-      this.audioTrack);
+      this.audioTrack,
+      this.loudnessDb);
 
   @override
   String toString() =>

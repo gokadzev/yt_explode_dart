@@ -278,6 +278,9 @@ class _StreamInfo extends StreamInfoProvider {
   }
 
   @override
+  late final loudnessDb = root.getT<double>('loudnessDb');
+
+  @override
   final StreamSource source;
 
   _StreamInfo(this.root, this.source);
