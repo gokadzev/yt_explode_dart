@@ -126,13 +126,17 @@ class PlayerResponse {
   late final List<StreamInfoProvider> adaptiveStreams = root
           .get('streamingData')
           ?.getList('adaptiveFormats')
-          ?.map((e) => _StreamInfo(e, StreamSource.adaptive))
+          ?.map((e) => e.getT<String>("mimeType")!.contains("audio")
+              ? _StreamInfo(e, StreamSource.adaptive)
+              : null)
+          .whereType<StreamInfoProvider>()
           .toList() ??
       const [];
 
   ///
   late final List<StreamInfoProvider> streams = [
-    ...muxedStreams,
+    // ignore muxed streams for now
+    //...muxedStreams,
     ...adaptiveStreams,
   ];
 
