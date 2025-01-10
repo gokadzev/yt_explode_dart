@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io' show SocketException;
 
 import 'package:logging/logging.dart';
 
@@ -112,6 +113,9 @@ class StreamClient {
           break;
         }
       } catch (e, s) {
+        if (e is SocketException) {
+          rethrow;
+        }
         _logger.severe(
             'Failed to get stream manifest for video $videoId with client: ${client.payload['context']['client']['clientName']}. Reason: $e\n',
             e,
