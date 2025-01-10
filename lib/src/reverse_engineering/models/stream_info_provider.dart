@@ -71,4 +71,6 @@ abstract class StreamInfoProvider {
   int? get audioItag => null;
 
   double? get loudnessDb => null;
+
+  int? get duration => null;
 }
