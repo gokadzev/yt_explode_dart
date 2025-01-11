@@ -8,10 +8,8 @@ final _logger = Logger('YoutubeExplode.Retry');
 
 /// Run the [function] each time an exception is thrown until the retryCount
 /// is 0.
-Future<T> retry<T>(
-  YoutubeHttpClient? client,
-  FutureOr<T> Function() function,
-) async {
+Future<T> retry<T>(YoutubeHttpClient? client, FutureOr<T> Function() function,
+    {YoutubeApiClient? youtubeApiClient}) async {
   var retryCount = 5;
 
   // ignore: literal_only_boolean_expressions
@@ -24,7 +22,7 @@ Future<T> retry<T>(
         throw HttpClientClosedException();
       }
       _logger.warning('Retrying after exception: $e', e, s);
-      retryCount -= getExceptionCost(e);
+      retryCount -= getExceptionCost(e, youtubeApiClient: youtubeApiClient);
       if (retryCount <= 0) {
         rethrow;
       }
@@ -34,7 +32,7 @@ Future<T> retry<T>(
 }
 
 /// Get "retry" cost of each YoutubeExplode exception.
-int getExceptionCost(Exception e) {
+int getExceptionCost(Exception e, {YoutubeApiClient? youtubeApiClient}) {
   if (e is RequestLimitExceededException) {
     return 2;
   }
@@ -43,6 +41,10 @@ int getExceptionCost(Exception e) {
   }
   if (e is VideoUnplayableException) {
     return 5;
+  }
+  if (youtubeApiClient!=null && ([YoutubeApiClient.mweb, YoutubeApiClient.safari, YoutubeApiClient.tv])
+      .contains(youtubeApiClient)) {
+    return 4;
   }
   return 3;
 }

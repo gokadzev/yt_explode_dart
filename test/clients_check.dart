@@ -1,6 +1,14 @@
+import 'package:logging/logging.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 void main() async {
+  Logger.root.level = Level.FINER;
+  Logger.root.onRecord.listen((e) {
+    print(e);
+    if (e.error != null) {
+      print(e.error);
+    }
+  });
   YoutubeExplode yt = YoutubeExplode();
   // check time of execution
   DateTime start = DateTime.now();
@@ -24,7 +32,7 @@ void main() async {
   DateTime end = DateTime.now();
   print(
       "====================Time taken: ${end.difference(start).inMilliseconds}ms by safari======\n\n");
-  return;
+
   start = DateTime.now();
   try {
     print("\n===================ANDROID_VR=======================");
@@ -50,10 +58,6 @@ void main() async {
         ytClients: [YoutubeApiClient.android]);
     for (var _ in manifest.audioOnly) {
       print("${_.codec} ${_.tag} ${_.loudnessDb}");
-      if (_.tag == 251) {
-        print(_.loudnessDb);
-        print(_.size);
-      }
     }
   } catch (e) {
     print("$e");

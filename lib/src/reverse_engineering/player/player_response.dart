@@ -282,7 +282,8 @@ class _StreamInfo extends StreamInfoProvider {
   }
 
   @override
-  late final loudnessDb = root.getT<double>('loudnessDb');
+  late final loudnessDb =
+      double.tryParse(root.getT('loudnessDb')?.toString() ?? "");
 
   @override
   late final duration =
