@@ -108,7 +108,7 @@ class StreamClient {
           }
 
           uniqueStreams.addAll(streams);
-        });
+        }, youtubeApiClient: client);
         if (uniqueStreams.isNotEmpty) {
           break;
         }
