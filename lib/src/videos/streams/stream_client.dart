@@ -56,14 +56,13 @@ class StreamClient {
           'Use the ytClient parameter instead passing the proper [YoutubeApiClient]s')
       bool fullManifest = false,
       List<YoutubeApiClient>? ytClients,
-      bool requireWatchPage = true}) async {
+      bool requireWatchPage = false}) async {
     videoId = VideoId.fromString(videoId);
     final clients = ytClients ??
         [
           YoutubeApiClient.androidVr,
           YoutubeApiClient.ios,
           YoutubeApiClient.android,
-          YoutubeApiClient.mweb,
           YoutubeApiClient.tv,
           YoutubeApiClient.safari
         ];
