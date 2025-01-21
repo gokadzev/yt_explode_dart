@@ -43,6 +43,8 @@ class VideoController {
         if (ytCfg != null)
           'X-Goog-Visitor-Id': ytCfg['INNERTUBE_CONTEXT']['client']
               ['visitorData'],
+        "X-Goog-FieldMask":
+            "playabilityStatus.status,playabilityStatus.reason,playerConfig.audioConfig,streamingData.adaptiveFormats,videoDetails.videoId",
         'Origin': 'https://www.youtube.com',
         'Sec-Fetch-Mode': 'navigate',
         'Content-Type': 'application/json',

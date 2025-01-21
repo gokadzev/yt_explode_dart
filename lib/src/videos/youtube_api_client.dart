@@ -21,15 +21,17 @@ class YoutubeApiClient {
     'context': {
       'client': {
         'clientName': 'IOS',
-        'clientVersion': '19.29.1',
+        'clientVersion': '19.45.4',
         'deviceMake': 'Apple',
         'deviceModel': 'iPhone16,2',
         'hl': 'en',
         'osName': 'iPhone',
-        'osVersion': '17.5.1.21F90',
+        'osVersion': '18.1.0.22B83',
         'timeZone': 'UTC',
+        'visitorData':
+            "CgszLU1GZjNndTFzSSiowb-8BjIKCgJJThIEGgAgMToKIJyn0M-llfjHZw%3D%3D",
         'userAgent':
-            'com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X;)',
+            'com.google.ios.youtube/19.45.4 (iPhone16,2; U; CPU iOS 18_1_0 like Mac OS X;)',
         'gl': 'US',
         'utcOffsetMinutes': 0
       }
@@ -75,11 +77,16 @@ class YoutubeApiClient {
     'context': {
       'client': {
         'clientName': 'ANDROID_VR',
-        'clientVersion': '1.56.21',
+        'clientVersion': '1.60.19',
         'deviceModel': 'Quest 3',
-        'osVersion': '12',
+        'deviceMake': 'Oculus',
+        'osVersion': '12L',
         'osName': 'Android',
         'androidSdkVersion': '32',
+        'visitorData':
+            "CgszLU1GZjNndTFzSSiowb-8BjIKCgJJThIEGgAgMToKIJyn0M-llfjHZw%3D%3D",
+        'userAgent':
+            'com.google.android.apps.youtube.vr.oculus/1.60.19 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip',
         'hl': 'en',
         'timeZone': 'UTC',
         'utcOffsetMinutes': 0,
@@ -143,7 +150,9 @@ class YoutubeApiClient {
     'context': {
       'client': {
         'clientName': 'MWEB',
-        'clientVersion': '2.20240726.01.00',
+        'clientVersion': '2.20241202.07.00',
+        'userAgent':
+            'Mozilla/5.0 (iPad; CPU OS 16_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1,gzip(gfe)',
         'hl': 'en',
         'timeZone': 'UTC',
         'utcOffsetMinutes': 0,
