@@ -28,8 +28,6 @@ class YoutubeApiClient {
         'osName': 'iPhone',
         'osVersion': '18.1.0.22B83',
         'timeZone': 'UTC',
-        'visitorData':
-            "CgszLU1GZjNndTFzSSiowb-8BjIKCgJJThIEGgAgMToKIJyn0M-llfjHZw%3D%3D",
         'userAgent':
             'com.google.ios.youtube/19.45.4 (iPhone16,2; U; CPU iOS 18_1_0 like Mac OS X;)',
         'gl': 'US',
@@ -83,8 +81,6 @@ class YoutubeApiClient {
         'osVersion': '12L',
         'osName': 'Android',
         'androidSdkVersion': '32',
-        'visitorData':
-            "CgszLU1GZjNndTFzSSiowb-8BjIKCgJJThIEGgAgMToKIJyn0M-llfjHZw%3D%3D",
         'userAgent':
             'com.google.android.apps.youtube.vr.oculus/1.60.19 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip',
         'hl': 'en',

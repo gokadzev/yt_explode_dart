@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+import '../reverse_engineering/player/player_source_dart.dart'
+    if (dart.library.ui) '../reverse_engineering/player/player_source_flutter.dart';
 import '../../youtube_explode_dart.dart';
 import '../reverse_engineering/pages/watch_page.dart';
 import '../reverse_engineering/player/player_response.dart';
@@ -14,10 +16,25 @@ class VideoController {
   Future<PlayerResponse> getPlayerResponse(
       VideoId videoId, YoutubeApiClient client,
       {WatchPage? watchPage}) async {
-    final payload = client.payload;
+    Map<String, dynamic> payload = client.payload;
     assert(payload['context'] != null, 'client must contain a context');
     assert(payload['context']!['client'] != null,
         'client must contain a context.client');
+    String? visitorData;
+
+    try {
+      if (payload['context']['client']['clientName'] != 'TVHTML5') {
+        visitorData = await getVisitorData();
+        if (visitorData != null) {
+          final clientData =
+              Map<String, dynamic>.from(payload['context']['client']);
+          clientData['visitorData'] = visitorData;
+          payload = {
+            "context": {"client": clientData}
+          };
+        }
+      }
+    } catch (e) {}
 
     final userAgent = payload['context']!['client']!['userAgent'] as String?;
     final ytCfg = watchPage?.ytCfg;
@@ -40,9 +57,10 @@ class VideoController {
         'X-Youtube-Client-Name': payload['context']!['client']!['clientName'],
         'X-Youtube-Client-Version':
             payload['context']!['client']!['clientVersion'],
-        if (ytCfg != null)
-          'X-Goog-Visitor-Id': ytCfg['INNERTUBE_CONTEXT']['client']
-              ['visitorData'],
+        if (ytCfg != null || visitorData != null)
+          'X-Goog-Visitor-Id': ytCfg?['INNERTUBE_CONTEXT']?['client']
+                  ?['visitorData'] ??
+              visitorData,
         "X-Goog-FieldMask":
             "playabilityStatus.status,playabilityStatus.reason,playerConfig.audioConfig,streamingData.adaptiveFormats,videoDetails.videoId",
         'Origin': 'https://www.youtube.com',
