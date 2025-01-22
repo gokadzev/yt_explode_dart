@@ -11,6 +11,8 @@ import '../../reverse_engineering/cipher/cipher_manifest.dart';
 import '../../reverse_engineering/heuristics.dart';
 import '../../reverse_engineering/models/stream_info_provider.dart';
 import '../../reverse_engineering/pages/watch_page.dart';
+import '../../reverse_engineering/player/player_source_dart.dart'
+    if (dart.library.ui) '../../reverse_engineering/player/player_source_flutter.dart';
 import '../../reverse_engineering/youtube_http_client.dart';
 import '../video_id.dart';
 import '../youtube_api_client.dart';
@@ -61,10 +63,9 @@ class StreamClient {
     final clients = ytClients ??
         [
           YoutubeApiClient.androidVr,
-          YoutubeApiClient.ios,
           YoutubeApiClient.android,
+          YoutubeApiClient.ios,
           YoutubeApiClient.tv,
-          YoutubeApiClient.safari
         ];
 
     final uniqueStreams = LinkedHashSet<StreamInfo>(
@@ -151,7 +152,7 @@ class StreamClient {
     if (!playerResponse.isVideoPlayable) {
       throw VideoUnplayableException.unplayable(
         videoId,
-        reason: playerResponse.videoPlayabilityError ?? '',
+        reason: playerResponse.videoPlayabilityError,
       );
     }
 
@@ -203,6 +204,7 @@ class StreamClient {
     }
 
     if (!playerResponse.isVideoPlayable) {
+      await getVisitorData(generateNew: true);
       throw VideoUnplayableException.unplayable(
         videoId,
         reason: playerResponse.videoPlayabilityError ?? '',

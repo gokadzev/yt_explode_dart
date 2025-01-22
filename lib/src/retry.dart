@@ -39,12 +39,5 @@ int getExceptionCost(Exception e, {YoutubeApiClient? youtubeApiClient}) {
   if (e is FatalFailureException) {
     return 3;
   }
-  if (e is VideoUnplayableException ||
-      youtubeApiClient == YoutubeApiClient.tv) {
-    return 5;
-  }
-  if (youtubeApiClient == YoutubeApiClient.ios) {
-    return 4;
-  }
-  return 5;
+  return 4;
 }
