@@ -73,7 +73,7 @@ print(manifest); // Prints the list of streams available for the video.
 // If you want to specify which youtube clients to use to get the manifest you can do so:
 var manifest = yt.videos.streams.getManifest(videoId, ytClients: [
   YoutubeApiClient.safari,
-  YoutubeApiClient.androidVr  
+  YoutubeApiClient.androidVr
 ]); // The streams provided by both clients will be merged.
 ```
 
@@ -146,12 +146,12 @@ Similarly, to streams, you can extract closed captions by getting the manifest a
   var trackManifest = await yt.videos.closedCaptions.getManifest('_QdPW8JrYzQ')
 
   var trackInfo = manifest.getByLanguage('en'); // Get english caption.
-  
+
   if (trackInfo != null)
   {
      // Get the actual closed caption track.
      var track = await youtube.videos.closedCaptions.get(trackInfo);
-      
+
     // Get the caption displayed at 1:01
     var caption = track.getByTime(Duration(seconds: 61));
     var text = caption?.text; // "And the game was afoot."
@@ -177,7 +177,7 @@ You can easily get the video comments of a given video, the return value of `com
 ```dart
 var comments = await yt.videos.comments.getComments(video);
 
-var replies = await yt.videos.comments.getReplies(comment); // Fetch the comment replies 
+var replies = await yt.videos.comments.getReplies(comment); // Fetch the comment replies
 ```
 
 
@@ -219,12 +219,13 @@ More examples available on [GitHub][Examples].
 
 
 Check the [api documentation][API] for additional information.
-You can find how most APIs can be used in the files inside the test/ folder. 
+You can find how most APIs can be used in the files inside the test/ folder.
 
 ### Credits
 
 - [Tyrrrz] for creating [YoutubeExplode] in C#
-- [Hexer10] (me) who ported the library over to Dart.
+- [Hexer10] who ported the library over to Dart.
+- [anandnet] who made some useful changes in the port.
 - [EnsembleUI] for the jsparser project.
 - [yt-dlp] for documentation and reverse engineering about the YouTube apis.
 - All the [Contributors] of this repository.
@@ -234,6 +235,7 @@ You can find how most APIs can be used in the files inside the test/ folder.
 [Examples]: https://github.com/Hexer10/youtube_explode_dart/tree/master/example
 [Tyrrrz]: https://github.com/Tyrrrz/
 [Hexer10]: https://github.com/Hexer10/
+[anandnet]: https://github.com/anandnet/
 [Contributors]: https://github.com/Hexer10/youtube_explode_dart/graphs/contributors
 [EnsembleUI]: https://github.com/EnsembleUI
 [Issue]: https://github.com/Hexer10/youtube_explode_dart/issues
