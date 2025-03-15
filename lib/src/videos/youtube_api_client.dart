@@ -21,16 +21,16 @@ class YoutubeApiClient {
     'context': {
       'client': {
         'clientName': 'IOS',
-        'clientVersion': '19.45.4',
+        'clientVersion': '20.10.4',
         'deviceMake': 'Apple',
-        'deviceModel': 'iPhone16,2',
+        'deviceModel': 'iPhone17,2',
         'hl': 'en',
         "platform": "MOBILE",
         'osName': 'IOS',
-        'osVersion': '18.1.0.22B83',
+        'osVersion': '18.3.2.22D82',
         'timeZone': 'UTC',
         'userAgent':
-            'com.google.ios.youtube/19.45.4 (iPhone16,2; U; CPU iOS 18_1_0 like Mac OS X; US)',
+            'com.google.ios.youtube/20.10.4 (iPhone17,2; U; CPU iOS 18_3_2 like Mac OS X; US)',
         'gl': 'US',
         'utcOffsetMinutes': 0
       }
