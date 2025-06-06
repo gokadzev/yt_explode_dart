@@ -10,7 +10,6 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "example/video_downloader_flutter/"
 
 linter:
   rules:
